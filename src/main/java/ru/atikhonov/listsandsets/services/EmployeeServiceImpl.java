@@ -5,6 +5,7 @@ import ru.atikhonov.listsandsets.model.Employee;
 import ru.atikhonov.listsandsets.exceptions.EmployeeAlreadyAddedException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeNotFoundException;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public List<Employee> print() {
-        return employees;
+        return Collections.unmodifiableList(employees);
     }
 
     @Override
