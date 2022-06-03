@@ -11,7 +11,7 @@ import java.util.List;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private LinkedList<Employee> employees = new LinkedList<>();
+    private final LinkedList<Employee> employees = new LinkedList<>();
 
 
     @Override
