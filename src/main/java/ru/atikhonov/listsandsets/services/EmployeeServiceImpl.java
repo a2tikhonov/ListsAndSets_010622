@@ -1,7 +1,7 @@
 package ru.atikhonov.listsandsets.services;
 
 import org.springframework.stereotype.Service;
-import ru.atikhonov.listsandsets.classes.Employee;
+import ru.atikhonov.listsandsets.model.Employee;
 import ru.atikhonov.listsandsets.exceptions.EmployeeAlreadyAddedException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeNotFoundException;
 

@@ -1,4 +1,4 @@
-package ru.atikhonov.listsandsets.classes;
+package ru.atikhonov.listsandsets.model;
 
 import java.util.Objects;
 
@@ -25,7 +25,7 @@ public class Employee {
 
     @Override
     public int hashCode() {
-        return Objects.hash(lastName.hashCode() + firstName.hashCode());
+        return Objects.hash(lastName, firstName);
     }
 
     public String getLastName() {

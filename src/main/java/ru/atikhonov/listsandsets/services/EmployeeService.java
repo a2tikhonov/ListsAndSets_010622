@@ -1,6 +1,6 @@
 package ru.atikhonov.listsandsets.services;
 
-import ru.atikhonov.listsandsets.classes.Employee;
+import ru.atikhonov.listsandsets.model.Employee;
 
 import java.util.List;
 
