@@ -1,52 +1,51 @@
 package ru.atikhonov.listsandsets.services;
 
 import org.springframework.stereotype.Service;
-import ru.atikhonov.listsandsets.model.Employee;
 import ru.atikhonov.listsandsets.exceptions.EmployeeAlreadyAddedException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeNotFoundException;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
+import ru.atikhonov.listsandsets.model.Employee;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 
-    private final LinkedList<Employee> employees;
+    private final Map<String, Employee> employees;
+
 
     public EmployeeServiceImpl() {
-        this.employees = new LinkedList<>();
+        this.employees = new HashMap<>();
     }
 
-    @Override
-    public List<Employee> print() {
-        return Collections.unmodifiableList(employees);
-    }
-
-    @Override
-    public Employee add(String firstName, String lastName) {
-        Employee employee = new Employee(lastName, firstName);
-        if (employees.contains(employee)) {
-            throw new EmployeeAlreadyAddedException();
+    public Employee add(String lastName, String firstName, String middleName, int department, int salary) {
+        final Employee employee = new Employee(lastName, firstName, middleName, department, salary);
+        if (!employees.containsKey(employee.toString())) {
+            employees.put(employee.toString(), employee);
         } else {
-            employees.add(employee);
-            return employees.getLast();
+            throw new EmployeeAlreadyAddedException();
+        }
+        return employee;
+    }
+
+    public Employee rm(String lastName, String firstName, String middleName) {
+        final Employee employee = new Employee(lastName, firstName, middleName);
+        if (employees.containsKey(employee.toString())) {
+            return employees.remove(employee.toString());
+        } else {
+            throw new EmployeeNotFoundException();
         }
     }
 
-    @Override
-    public Employee rm(String firstName, String lastName) {
-        Employee employee = new Employee(lastName, firstName);
-        if (employees.remove(employee)) {
-            return employee;
-        } else throw new EmployeeNotFoundException();
+    public Employee find(String lastName, String firstName, String middleName) {
+        Employee employee = new Employee(lastName, firstName, middleName);
+        if (employees.containsKey(employee.toString())) {
+            return employees.get(employee.toString());
+        } else {
+            throw new EmployeeNotFoundException();
+        }
     }
 
-    @Override
-    public Employee find(String firstName, String lastName) {
-        Employee employee = new Employee(lastName, firstName);
-        if (employees.contains(employee)) {
-            return employee;
-        } else throw new EmployeeNotFoundException();
+    public Map<String, Employee> print() {
+        return Map.copyOf(employees);
     }
+
 }
