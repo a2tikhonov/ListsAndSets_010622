@@ -28,14 +28,10 @@ public class DepartmentController {
         return departmentService.minSalary(departmentId);
     }
 
-    @GetMapping("/allByDepartment")
-    public List<Employee> print(@RequestParam int departmentId) {
-        return departmentService.print(departmentId);
-    }
-
     @GetMapping("/all")
-    public List<Employee> print() {
-        return departmentService.print();
+    public List<Employee> print(@RequestParam(required = false) Integer departmentId) {
+        if (departmentId == null) return departmentService.print();
+        else return departmentService.print(departmentId);
     }
 
 }
