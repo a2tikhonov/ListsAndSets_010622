@@ -1,7 +1,9 @@
 package ru.atikhonov.listsandsets.services;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import ru.atikhonov.listsandsets.exceptions.EmployeeAlreadyAddedException;
+import ru.atikhonov.listsandsets.exceptions.EmployeeIncorrectDataException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeNotFoundException;
 import ru.atikhonov.listsandsets.model.Employee;
 import java.util.*;
@@ -17,7 +19,11 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee add(String lastName, String firstName, String middleName, int department, int salary) {
-        final Employee employee = new Employee(lastName, firstName, middleName, department, salary);
+        if (!StringUtils.isAlpha(lastName + firstName + middleName)){ throw new EmployeeIncorrectDataException();}
+        final Employee employee = new Employee(StringUtils.capitalize(StringUtils.lowerCase(lastName))
+                , StringUtils.capitalize(StringUtils.lowerCase(firstName))
+                , StringUtils.capitalize(StringUtils.lowerCase(middleName))
+                , department, salary);
         if (!employees.containsKey(employee.toString())) {
             employees.put(employee.toString(), employee);
         } else {

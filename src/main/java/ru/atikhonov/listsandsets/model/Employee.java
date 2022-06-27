@@ -1,5 +1,8 @@
 package ru.atikhonov.listsandsets.model;
 
+import org.apache.commons.lang3.LocaleUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Objects;
 
 public class Employee {
@@ -23,13 +26,15 @@ public class Employee {
 
     @Override
     public String toString() {
-        return lastName + " " + firstName;
+        return lastName + " " + firstName + " " + middleName;
     }
 
     @Override
     public boolean equals(Object object) {
         if (this.getClass() != object.getClass()) return false;
-        return lastName.equals(((Employee) object).lastName) && firstName.equals(((Employee) object).firstName);
+        return lastName.equals(((Employee) object).lastName)
+                && firstName.equals(((Employee) object).firstName)
+                && middleName.equals(((Employee) object).middleName);
     }
 
     public int getSalary() {
@@ -61,5 +66,7 @@ public class Employee {
         return firstName;
     }
 
-
+    public String getMiddleName() {
+        return middleName;
+    }
 }
