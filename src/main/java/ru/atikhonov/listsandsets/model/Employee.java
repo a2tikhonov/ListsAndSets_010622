@@ -5,6 +5,8 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.*;
+
 public class Employee {
     private final String firstName;
     private final String lastName;
@@ -13,13 +15,13 @@ public class Employee {
     private int department;
 
     public Employee(String lastName, String firstName, String middleName) {
-        this.lastName = lastName;
-        this.firstName = firstName;
-        this.middleName = middleName;
+        this.lastName = capitalize(lowerCase(lastName));
+        this.firstName = capitalize(lowerCase(firstName));
+        this.middleName = capitalize(lowerCase(middleName));
     }
 
     public Employee(String lastName, String firstName, String middleName, int department, int salary) {
-        this(lastName, firstName, middleName);
+        this(capitalize(lowerCase(lastName)), capitalize(lowerCase(firstName)), capitalize(lowerCase(middleName)));
         this.salary = salary;
         this.department = department;
     }

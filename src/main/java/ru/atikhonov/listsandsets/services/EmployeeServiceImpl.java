@@ -6,7 +6,11 @@ import ru.atikhonov.listsandsets.exceptions.EmployeeAlreadyAddedException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeIncorrectDataException;
 import ru.atikhonov.listsandsets.exceptions.EmployeeNotFoundException;
 import ru.atikhonov.listsandsets.model.Employee;
+
 import java.util.*;
+
+import static org.apache.commons.lang3.StringUtils.capitalize;
+import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -19,11 +23,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee add(String lastName, String firstName, String middleName, int department, int salary) {
-        if (!StringUtils.isAlpha(lastName + firstName + middleName)){ throw new EmployeeIncorrectDataException();}
-        final Employee employee = new Employee(StringUtils.capitalize(StringUtils.lowerCase(lastName))
-                , StringUtils.capitalize(StringUtils.lowerCase(firstName))
-                , StringUtils.capitalize(StringUtils.lowerCase(middleName))
-                , department, salary);
+        validateName(lastName, firstName, middleName);
+        final Employee employee = new Employee(lastName, firstName, middleName, department, salary);
         if (!employees.containsKey(employee.toString())) {
             employees.put(employee.toString(), employee);
         } else {
@@ -33,6 +34,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee rm(String lastName, String firstName, String middleName) {
+        validateName(lastName, firstName, middleName);
         final Employee employee = new Employee(lastName, firstName, middleName);
         if (employees.containsKey(employee.toString())) {
             return employees.remove(employee.toString());
@@ -42,6 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     public Employee find(String lastName, String firstName, String middleName) {
+        validateName(lastName, firstName, middleName);
         Employee employee = new Employee(lastName, firstName, middleName);
         if (employees.containsKey(employee.toString())) {
             return employees.get(employee.toString());
@@ -52,6 +55,12 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     public Map<String, Employee> print() {
         return Map.copyOf(employees);
+    }
+
+    private void validateName(String lastName, String firstName, String middleName) {
+        if (!StringUtils.isAlpha(lastName + firstName + middleName)) {
+            throw new EmployeeIncorrectDataException();
+        }
     }
 
 }
