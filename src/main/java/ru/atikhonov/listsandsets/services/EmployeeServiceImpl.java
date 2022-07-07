@@ -9,8 +9,6 @@ import ru.atikhonov.listsandsets.model.Employee;
 
 import java.util.*;
 
-import static org.apache.commons.lang3.StringUtils.capitalize;
-import static org.apache.commons.lang3.StringUtils.lowerCase;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
