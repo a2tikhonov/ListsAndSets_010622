@@ -9,56 +9,85 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static ru.atikhonov.listsandsets.constants.ConstantsForEmployeeAndDepartmentServicesTests.*;
 
 class EmployeeServiceTest {
-    static final String FIRST_NAME = "Александр";
-    static final String MIDDLE_NAME = "Александрович";
-    static final String LAST_NAME = "Тихонов";
-    static final int DEPARTMENT = 7;
-    static final int SALARY = 150_000;
-
     private final EmployeeServiceImpl out = new EmployeeServiceImpl();
-    private final Employee expectedEmployee = new Employee(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY);
 
 
     @Test
     void shouldReturnAddedEmployee() {
-        assertEquals(expectedEmployee, out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY));
+        assertEquals(EMPLOYEE1, out.add(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()
+                , EMPLOYEE1.getDepartment()
+                , EMPLOYEE1.getSalary()));
     }
 
     @Test
     void shouldReturnEmployeeAlreadyAddedExceptionWhenAttemptToAdd() {
-        out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY);
-        assertThrows(EmployeeAlreadyAddedException.class, () -> out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY));
+        out.add(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()
+                , EMPLOYEE1.getDepartment()
+                , EMPLOYEE1.getSalary());
+        assertThrows(EmployeeAlreadyAddedException.class
+                , () -> out.add(EMPLOYEE1.getLastName()
+                        , EMPLOYEE1.getFirstName()
+                        , EMPLOYEE1.getMiddleName()
+                        , EMPLOYEE1.getDepartment()
+                        , EMPLOYEE1.getSalary()));
     }
 
     @Test
     void shouldReturnRemovedEmployee() {
-        out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY);
-        assertEquals(expectedEmployee, out.rm(LAST_NAME, FIRST_NAME, MIDDLE_NAME));
+        out.add(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()
+                , EMPLOYEE1.getDepartment()
+                , EMPLOYEE1.getSalary());
+        assertEquals(EMPLOYEE1, out.rm(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()));
     }
 
     @Test
     void shouldReturnEmployeeNotFoundExceptionWhenAttemptToRemove() {
-        assertThrows(EmployeeNotFoundException.class, () -> out.rm(LAST_NAME, FIRST_NAME, MIDDLE_NAME));
+        assertThrows(EmployeeNotFoundException.class
+                , () -> out.rm(EMPLOYEE1.getLastName()
+                        , EMPLOYEE1.getFirstName()
+                        , EMPLOYEE1.getMiddleName()));
     }
 
     @Test
     void shouldReturnFoundEmployee() {
-        out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY);
-        assertEquals(expectedEmployee, out.find(LAST_NAME, FIRST_NAME, MIDDLE_NAME));
+        out.add(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()
+                , EMPLOYEE1.getDepartment()
+                , EMPLOYEE1.getSalary());
+        assertEquals(EMPLOYEE1, out.find(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()));
     }
 
     @Test
     void shouldReturnEmployeeNotFoundExceptionWhenAttemptToFind() {
-        assertThrows(EmployeeNotFoundException.class, () -> out.find(LAST_NAME, FIRST_NAME, MIDDLE_NAME));
+        assertThrows(EmployeeNotFoundException.class
+                , () -> out.find(EMPLOYEE1.getLastName()
+                        , EMPLOYEE1.getFirstName()
+                        , EMPLOYEE1.getMiddleName()));
     }
 
     @Test
     void shouldReturnMapWhenPrint() {
         Map<String, Employee> expectedEmployeeMap = new HashMap<>();
-        expectedEmployeeMap.put(expectedEmployee.toString(), expectedEmployee);
-        out.add(LAST_NAME, FIRST_NAME, MIDDLE_NAME, DEPARTMENT, SALARY);
+        expectedEmployeeMap.put(EMPLOYEE1.toString(), EMPLOYEE1);
+        out.add(EMPLOYEE1.getLastName()
+                , EMPLOYEE1.getFirstName()
+                , EMPLOYEE1.getMiddleName()
+                , EMPLOYEE1.getDepartment()
+                , EMPLOYEE1.getSalary());
         assertEquals(expectedEmployeeMap, out.print());
     }
 
